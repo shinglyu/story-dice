@@ -1,6 +1,9 @@
 // Constants
 const EMPTY_STATE_MESSAGE = 'Click "Generate Emojis" to start!';
 
+// Track if confetti has been triggered for current emoji set
+let confettiTriggered = false;
+
 // Collection of UTF-8 emojis for story dice
 const EMOJI_COLLECTION = [
     '🎲', '🎭', '🎨', '🎪', '🎬', '🎮', '🎯', '🎰', '🎳',
@@ -95,9 +98,9 @@ function triggerConfetti() {
                 allOffScreen = false;
             }
             
-            // Fade out near the bottom
+            // Fade out near the bottom based on speed for consistency
             if (piece.y > canvas.height - 100) {
-                piece.opacity -= 0.01;
+                piece.opacity -= piece.speed * 0.004;
             }
         });
         
@@ -119,7 +122,8 @@ function checkAllClicked() {
     
     const allClicked = Array.from(emojiItems).every(item => item.classList.contains('used'));
     
-    if (allClicked) {
+    if (allClicked && !confettiTriggered) {
+        confettiTriggered = true;
         triggerConfetti();
     }
 }
@@ -128,6 +132,9 @@ function checkAllClicked() {
 function displayEmojis(emojis) {
     const emojiDisplay = document.getElementById('emojiDisplay');
     emojiDisplay.innerHTML = '';
+    
+    // Reset confetti trigger flag for new emoji set
+    confettiTriggered = false;
     
     if (emojis.length === 0) {
         emojiDisplay.innerHTML = `<div class="empty-state">${EMPTY_STATE_MESSAGE}</div>`;
@@ -142,7 +149,14 @@ function displayEmojis(emojis) {
         
         // Add click handler to toggle used state
         emojiElement.addEventListener('click', () => {
+            const wasUsed = emojiElement.classList.contains('used');
             emojiElement.classList.toggle('used');
+            
+            // Reset confetti flag if unchecking an emoji
+            if (wasUsed) {
+                confettiTriggered = false;
+            }
+            
             // Check if all emojis are now clicked
             checkAllClicked();
         });
