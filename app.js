@@ -43,6 +43,55 @@ function getRandomEmojis(count) {
     return selectedEmojis;
 }
 
+// Function to validate emoji count input
+function validateEmojiCount(value) {
+    const errorMessage = document.getElementById('errorMessage');
+    const emojiCountInput = document.getElementById('emojiCount');
+    
+    // Clear previous error state
+    errorMessage.textContent = '';
+    emojiCountInput.classList.remove('invalid');
+    
+    // Check if value is empty or not a number
+    if (value === '' || value === null || value === undefined) {
+        errorMessage.textContent = 'Please enter a number';
+        emojiCountInput.classList.add('invalid');
+        return false;
+    }
+    
+    const count = parseInt(value, 10);
+    
+    // Check if parsing resulted in NaN
+    if (isNaN(count)) {
+        errorMessage.textContent = 'Please enter a valid number';
+        emojiCountInput.classList.add('invalid');
+        return false;
+    }
+    
+    // Check minimum value
+    if (count < 1) {
+        errorMessage.textContent = 'Please enter a number greater than 0';
+        emojiCountInput.classList.add('invalid');
+        return false;
+    }
+    
+    // Check maximum value
+    if (count > 50) {
+        errorMessage.textContent = 'Please enter a number no greater than 50';
+        emojiCountInput.classList.add('invalid');
+        return false;
+    }
+    
+    // Check against available emoji collection
+    if (count > EMOJI_COLLECTION.length) {
+        errorMessage.textContent = `Only ${EMOJI_COLLECTION.length} unique emojis available`;
+        emojiCountInput.classList.add('invalid');
+        return false;
+    }
+    
+    return true;
+}
+
 // Confetti effect function
 function triggerConfetti() {
     const canvas = document.getElementById('confettiCanvas');
@@ -176,7 +225,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Generate emojis on button click
     generateBtn.addEventListener('click', () => {
-        const count = parseInt(emojiCountInput.value, 10);
+        const inputValue = emojiCountInput.value;
+        
+        // Validate input before generating
+        if (!validateEmojiCount(inputValue)) {
+            return; // Don't generate if validation fails
+        }
+        
+        const count = parseInt(inputValue, 10);
         const emojis = getRandomEmojis(count);
         displayEmojis(emojis);
     });
@@ -186,6 +242,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') {
             generateBtn.click();
         }
+    });
+    
+    // Clear error message when user starts typing
+    emojiCountInput.addEventListener('input', () => {
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.textContent = '';
+        emojiCountInput.classList.remove('invalid');
     });
     
     // Generate initial set of emojis on load using the default value from the input
