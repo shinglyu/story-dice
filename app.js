@@ -253,9 +253,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.getElementById('errorMessage');
     const setCheckboxes = document.querySelectorAll('.set-checkbox');
     const allSetsCheckbox = document.querySelector('.set-checkbox[value="all"]');
+    const toggleSettingsBtn = document.getElementById('toggleSettings');
+    const setOptions = document.getElementById('setOptions');
+    const toggleIcon = toggleSettingsBtn.querySelector('.toggle-icon');
     
     // Set initial empty state
     emojiDisplay.innerHTML = `<div class="empty-state">${EMPTY_STATE_MESSAGE}</div>`;
+    
+    // Initialize collapsed state based on screen size
+    const initializeToggleState = () => {
+        const isSmallScreen = window.innerWidth <= 600;
+        if (isSmallScreen) {
+            setOptions.classList.remove('expanded');
+            toggleIcon.classList.remove('expanded');
+        } else {
+            setOptions.classList.add('expanded');
+            toggleIcon.classList.add('expanded');
+        }
+    };
+    
+    initializeToggleState();
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        const isSmallScreen = window.innerWidth <= 600;
+        if (!isSmallScreen && !setOptions.classList.contains('expanded')) {
+            // Auto-expand on large screens if currently collapsed
+            setOptions.classList.add('expanded');
+            toggleIcon.classList.add('expanded');
+        }
+    });
+    
+    // Toggle settings visibility
+    toggleSettingsBtn.addEventListener('click', () => {
+        setOptions.classList.toggle('expanded');
+        toggleIcon.classList.toggle('expanded');
+    });
     
     // Handle "All Sets" checkbox behavior
     setCheckboxes.forEach(checkbox => {

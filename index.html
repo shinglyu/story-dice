@@ -14,8 +14,13 @@
         <p class="subtitle">Generate random emojis for creative storytelling!</p>
         
         <div class="set-selector">
-            <h3>Select Emoji Sets:</h3>
-            <div class="set-options">
+            <div class="set-selector-header">
+                <h3>Select Emoji Sets:</h3>
+                <button id="toggleSettings" class="toggle-btn" aria-label="Toggle emoji set settings">
+                    <span class="toggle-icon">▼</span>
+                </button>
+            </div>
+            <div class="set-options" id="setOptions">
                 <label class="set-option">
                     <input type="checkbox" class="set-checkbox" value="all" checked>
                     <span>All Sets</span>
