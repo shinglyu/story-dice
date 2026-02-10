@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Dice - Random Emoji Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 Story Dice</h1>
+        <p class="subtitle">Generate random emojis for creative storytelling!</p>
+        
+        <div class="controls">
+            <label for="emojiCount">Number of emojis:</label>
+            <input type="number" id="emojiCount" min="1" max="50" value="9">
+            <button id="generateBtn">Generate Emojis</button>
+        </div>
+        
+        <div id="emojiDisplay" class="emoji-display">
+            <!-- Emojis will appear here -->
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
