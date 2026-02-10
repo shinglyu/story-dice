@@ -91,7 +91,6 @@ function validateEmojiCount(value) {
     
     return true;
 }
-
 // Confetti effect function
 function triggerConfetti() {
     const canvas = document.getElementById('confettiCanvas');
@@ -176,56 +175,6 @@ function checkAllClicked() {
         triggerConfetti();
     }
 }
-
-// Function to validate emoji count input
-function validateEmojiCount(value) {
-    const errorMessage = document.getElementById('errorMessage');
-    const emojiCountInput = document.getElementById('emojiCount');
-    
-    // Clear previous error state
-    errorMessage.textContent = '';
-    emojiCountInput.classList.remove('invalid');
-    
-    // Check if value is empty or not a number
-    if (value === '' || value === null || value === undefined) {
-        errorMessage.textContent = 'Please enter a number';
-        emojiCountInput.classList.add('invalid');
-        return false;
-    }
-    
-    const count = parseInt(value, 10);
-    
-    // Check if parsing resulted in NaN
-    if (isNaN(count)) {
-        errorMessage.textContent = 'Please enter a valid number';
-        emojiCountInput.classList.add('invalid');
-        return false;
-    }
-    
-    // Check minimum value
-    if (count < 1) {
-        errorMessage.textContent = 'Please enter a number greater than 0';
-        emojiCountInput.classList.add('invalid');
-        return false;
-    }
-    
-    // Check maximum value
-    if (count > 50) {
-        errorMessage.textContent = 'Please enter a number no greater than 50';
-        emojiCountInput.classList.add('invalid');
-        return false;
-    }
-    
-    // Check against available emoji collection
-    if (count > EMOJI_COLLECTION.length) {
-        errorMessage.textContent = `Only ${EMOJI_COLLECTION.length} unique emojis available`;
-        emojiCountInput.classList.add('invalid');
-        return false;
-    }
-    
-    return true;
-}
-
 // Function to display emojis
 function displayEmojis(emojis) {
     const emojiDisplay = document.getElementById('emojiDisplay');
