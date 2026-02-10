@@ -291,7 +291,7 @@ button:active {
         font-size: 3em;
     }
     
-    /* Collapse settings by default on small screens */
+    /* Collapses settings by default on small screens */
     .set-options {
         max-height: 0;
         opacity: 0;

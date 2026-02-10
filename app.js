@@ -274,14 +274,22 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initializeToggleState();
     
-    // Handle window resize
+    // Handle window resize with debouncing
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-        const isSmallScreen = window.innerWidth <= 600;
-        if (!isSmallScreen && !setOptions.classList.contains('expanded')) {
-            // Auto-expand on large screens if currently collapsed
-            setOptions.classList.add('expanded');
-            toggleIcon.classList.add('expanded');
-        }
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const isSmallScreen = window.innerWidth <= 600;
+            if (!isSmallScreen && !setOptions.classList.contains('expanded')) {
+                // Auto-expand on large screens if currently collapsed
+                setOptions.classList.add('expanded');
+                toggleIcon.classList.add('expanded');
+            } else if (isSmallScreen && setOptions.classList.contains('expanded')) {
+                // Auto-collapse on small screens if currently expanded
+                setOptions.classList.remove('expanded');
+                toggleIcon.classList.remove('expanded');
+            }
+        }, 250);
     });
     
     // Toggle settings visibility
