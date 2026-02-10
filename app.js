@@ -40,6 +40,90 @@ function getRandomEmojis(count) {
     return selectedEmojis;
 }
 
+// Confetti effect function
+function triggerConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas size to full screen
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Show canvas
+    canvas.style.display = 'block';
+    
+    const confettiPieces = [];
+    const confettiCount = 150;
+    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7b731', '#5f27cd', '#00d2d3', '#ff9ff3', '#54a0ff'];
+    
+    // Create confetti pieces
+    for (let i = 0; i < confettiCount; i++) {
+        confettiPieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            w: Math.random() * 10 + 5,
+            h: Math.random() * 5 + 5,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: Math.random() * 360,
+            speed: Math.random() * 3 + 2,
+            rotationSpeed: Math.random() * 5 - 2.5,
+            opacity: 1
+        });
+    }
+    
+    let animationFrameId;
+    
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        let allOffScreen = true;
+        
+        confettiPieces.forEach(piece => {
+            ctx.save();
+            ctx.translate(piece.x + piece.w / 2, piece.y + piece.h / 2);
+            ctx.rotate((piece.rotation * Math.PI) / 180);
+            ctx.globalAlpha = piece.opacity;
+            ctx.fillStyle = piece.color;
+            ctx.fillRect(-piece.w / 2, -piece.h / 2, piece.w, piece.h);
+            ctx.restore();
+            
+            piece.y += piece.speed;
+            piece.rotation += piece.rotationSpeed;
+            piece.x += Math.sin(piece.y / 50) * 0.5;
+            
+            if (piece.y < canvas.height) {
+                allOffScreen = false;
+            }
+            
+            // Fade out near the bottom
+            if (piece.y > canvas.height - 100) {
+                piece.opacity -= 0.01;
+            }
+        });
+        
+        if (allOffScreen) {
+            canvas.style.display = 'none';
+            cancelAnimationFrame(animationFrameId);
+        } else {
+            animationFrameId = requestAnimationFrame(animate);
+        }
+    }
+    
+    animate();
+}
+
+// Function to check if all emojis are clicked
+function checkAllClicked() {
+    const emojiItems = document.querySelectorAll('.emoji-item');
+    if (emojiItems.length === 0) return false;
+    
+    const allClicked = Array.from(emojiItems).every(item => item.classList.contains('used'));
+    
+    if (allClicked) {
+        triggerConfetti();
+    }
+}
+
 // Function to display emojis
 function displayEmojis(emojis) {
     const emojiDisplay = document.getElementById('emojiDisplay');
@@ -59,6 +143,8 @@ function displayEmojis(emojis) {
         // Add click handler to toggle used state
         emojiElement.addEventListener('click', () => {
             emojiElement.classList.toggle('used');
+            // Check if all emojis are now clicked
+            checkAllClicked();
         });
         
         emojiDisplay.appendChild(emojiElement);
