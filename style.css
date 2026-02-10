@@ -93,25 +93,26 @@ h1 {
 .toggle-icon {
     display: inline-block;
     transition: transform 0.3s;
+    transform: rotate(-90deg);
 }
 
-.toggle-icon.collapsed {
-    transform: rotate(-90deg);
+.toggle-icon.expanded {
+    transform: rotate(0deg);
 }
 
 .set-options {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    max-height: 500px;
+    max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-    opacity: 1;
+    opacity: 0;
 }
 
-.set-options.collapsed {
-    max-height: 0;
-    opacity: 0;
+.set-options.expanded {
+    max-height: 500px;
+    opacity: 1;
 }
 
 .set-option {
@@ -320,24 +321,5 @@ button:active {
     
     .emoji-item {
         font-size: 3em;
-    }
-    
-    /* Collapses settings by default on small screens */
-    .set-options {
-        max-height: 0;
-        opacity: 0;
-    }
-    
-    .set-options.expanded {
-        max-height: 500px;
-        opacity: 1;
-    }
-    
-    .toggle-icon {
-        transform: rotate(-90deg);
-    }
-    
-    .toggle-icon.expanded {
-        transform: rotate(0deg);
     }
 }

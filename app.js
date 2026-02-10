@@ -386,20 +386,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.getElementById('errorMessage');
     const toggleSettingsBtn = document.getElementById('toggleSettings');
     const setOptions = document.getElementById('setOptions');
-    const toggleIcon = toggleSettingsBtn.querySelector('.toggle-icon');
+    const toggleIcon = toggleSettingsBtn ? toggleSettingsBtn.querySelector('.toggle-icon') : null;
     
     // Set initial empty state
     emojiDisplay.innerHTML = `<div class="empty-state">${EMPTY_STATE_MESSAGE}</div>`;
     
     // Initialize collapsed state based on screen size
     const initializeToggleState = () => {
+        if (!setOptions) return;
         const isSmallScreen = window.innerWidth <= 600;
         if (isSmallScreen) {
             setOptions.classList.remove('expanded');
-            toggleIcon.classList.remove('expanded');
+            if (toggleIcon) toggleIcon.classList.remove('expanded');
         } else {
             setOptions.classList.add('expanded');
-            toggleIcon.classList.add('expanded');
+            if (toggleIcon) toggleIcon.classList.add('expanded');
         }
     };
     
@@ -410,24 +411,27 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
+            if (!setOptions) return;
             const isSmallScreen = window.innerWidth <= 600;
             if (!isSmallScreen && !setOptions.classList.contains('expanded')) {
                 // Auto-expand on large screens if currently collapsed
                 setOptions.classList.add('expanded');
-                toggleIcon.classList.add('expanded');
+                if (toggleIcon) toggleIcon.classList.add('expanded');
             } else if (isSmallScreen && setOptions.classList.contains('expanded')) {
                 // Auto-collapse on small screens if currently expanded
                 setOptions.classList.remove('expanded');
-                toggleIcon.classList.remove('expanded');
+                if (toggleIcon) toggleIcon.classList.remove('expanded');
             }
         }, 250);
     });
     
     // Toggle settings visibility
-    toggleSettingsBtn.addEventListener('click', () => {
-        setOptions.classList.toggle('expanded');
-        toggleIcon.classList.toggle('expanded');
-    });
+    if (toggleSettingsBtn) {
+        toggleSettingsBtn.addEventListener('click', () => {
+            if (setOptions) setOptions.classList.toggle('expanded');
+            if (toggleIcon) toggleIcon.classList.toggle('expanded');
+        });
+    }
     
     // Function to get selected set
     function getSelectedSet() {
