@@ -1,3 +1,6 @@
+// Constants
+const EMPTY_STATE_MESSAGE = 'Click "Generate Emojis" to start!';
+
 // Collection of UTF-8 emojis for story dice
 const EMOJI_COLLECTION = [
     '🎲', '🎭', '🎨', '🎪', '🎬', '🎮', '🎯', '🎰', '🎳',
@@ -44,7 +47,7 @@ function displayEmojis(emojis) {
     emojiDisplay.innerHTML = '';
     
     if (emojis.length === 0) {
-        emojiDisplay.innerHTML = '<div class="empty-state">Click "Generate Emojis" to start!</div>';
+        emojiDisplay.innerHTML = `<div class="empty-state">${EMPTY_STATE_MESSAGE}</div>`;
         return;
     }
     
@@ -64,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emojiDisplay = document.getElementById('emojiDisplay');
     
     // Set initial empty state
-    emojiDisplay.innerHTML = '<div class="empty-state">Click "Generate Emojis" to start!</div>';
+    emojiDisplay.innerHTML = `<div class="empty-state">${EMPTY_STATE_MESSAGE}</div>`;
     
     // Generate emojis on button click
     generateBtn.addEventListener('click', () => {
@@ -80,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Generate initial set of 9 emojis on load
-    const initialEmojis = getRandomEmojis(9);
+    // Generate initial set of emojis on load using the default value from the input
+    const initialEmojis = getRandomEmojis(parseInt(emojiCountInput.value, 10));
     displayEmojis(initialEmojis);
 });
