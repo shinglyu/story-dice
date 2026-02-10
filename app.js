@@ -107,7 +107,6 @@ const STORY_SETS = {
             }
         }
     }
->>>>>>> b155a47 (Redesign with single set selection and 5 new themed story sets)
 };
 
 // Function to get random element from array
@@ -247,15 +246,9 @@ function validateEmojiCount(value) {
         return false;
     }
     
-    // Check against available emoji collection
-    if (count > EMOJI_COLLECTION.length) {
-        errorMessage.textContent = `Only ${EMOJI_COLLECTION.length} unique emojis available`;
-        emojiCountInput.classList.add('invalid');
-        return false;
-    }
-    
     return true;
 }
+
 // Confetti effect function
 function triggerConfetti() {
     const canvas = document.getElementById('confettiCanvas');
