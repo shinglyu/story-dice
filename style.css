@@ -100,12 +100,43 @@ button:active {
 .emoji-item {
     font-size: 4em;
     animation: fadeIn 0.5s ease-in;
-    cursor: default;
+    cursor: pointer;
     transition: transform 0.3s;
+    position: relative;
 }
 
 .emoji-item:hover {
     transform: scale(1.2);
+}
+
+.emoji-item.used::after {
+    content: '✓';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #22c55e;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.4em;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.5);
+    animation: checkmarkAppear 0.3s ease-out;
+}
+
+@keyframes checkmarkAppear {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @keyframes fadeIn {
