@@ -219,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateBtn = document.getElementById('generateBtn');
     const emojiCountInput = document.getElementById('emojiCount');
     const emojiDisplay = document.getElementById('emojiDisplay');
+    const errorMessage = document.getElementById('errorMessage');
     
     // Set initial empty state
     emojiDisplay.innerHTML = `<div class="empty-state">${EMPTY_STATE_MESSAGE}</div>`;
@@ -246,7 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Clear error message when user starts typing
     emojiCountInput.addEventListener('input', () => {
-        const errorMessage = document.getElementById('errorMessage');
         errorMessage.textContent = '';
         emojiCountInput.classList.remove('invalid');
     });
