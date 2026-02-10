@@ -175,6 +175,7 @@ function checkAllClicked() {
         triggerConfetti();
     }
 }
+
 // Function to display emojis
 function displayEmojis(emojis) {
     const emojiDisplay = document.getElementById('emojiDisplay');
