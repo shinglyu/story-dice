@@ -4,75 +4,199 @@ const EMPTY_STATE_MESSAGE = 'Click "Generate Emojis" to start!';
 // Track if confetti has been triggered for current emoji set
 let confettiTriggered = false;
 
-// Categorized emoji sets for fine-grained control
-const EMOJI_SETS = {
-    environment: [
-        '🏰', '🏡', '🏢', '🏣', '🏤', '🏥', '🏦', '🏧', '🏨',
-        '🌍', '🌎', '🌏', '🌐', '🌑', '🌒', '🌓', '🌔', '🌕',
-        '🔥', '💧', '🌊', '⭐', '🌟', '💫', '✨', '☀️', '🌙',
-        '🌸', '🌺', '🌻', '🌼', '🌷', '🌹', '🥀', '🌾', '🌿',
-        '🍀', '🍁', '🍂', '🍃', '🍄'
-    ],
-    character: [
-        '🐀', '🐁', '🐂', '🐃', '🐄', '🐅', '🐆', '🐇', '🐈',
-        '🦁', '🦂', '🦃', '🦄', '🦅', '🦆', '🦇', '🦈', '🦉'
-    ],
-    item: [
-        '👑', '👒', '👓', '👔', '👕', '👖', '👗', '👘', '👙',
-        '🔑', '🔒', '🔓', '🔔', '🔕', '🔖', '🔗', '🔨', '🔪',
-        '📱', '📲', '📳', '📴', '📵', '📶', '📷', '📸', '📹',
-        '⚽', '⚾', '🏀', '🏈', '🏉', '🎾', '🎱', '🎣', '🎤',
-        '🍕', '🍔', '🍟', '🍗', '🍖', '🍝', '🍜', '🍛', '🍚',
-        '🍅', '🍆', '🍇', '🍈'
-    ],
-    event: [
-        '🎲', '🎭', '🎨', '🎪', '🎬', '🎮', '🎯', '🎰', '🎳',
-        '❤️', '🎁', '🎂', '🎈', '🎉', '🎊', '🎋', '🎌', '🎍', '🎎'
-    ],
-    transport: [
-        '🚀', '🚁', '🚂', '🚃', '🚄', '🚅', '🚆', '🚇', '🚌'
-    ]
+// Story Dice Sets - Simple and Complex
+const STORY_SETS = {
+    'heros-journey': {
+        type: 'complex',
+        name: "Hero's Journey",
+        icon: '🦸',
+        categories: {
+            hero: {
+                priority: 1,
+                emojis: ['🦸', '🦸‍♀️', '🧙', '🧙‍♀️', '🤴', '👸', '🧝', '🧝‍♀️', '🧚', '🧚‍♀️']
+            },
+            challenge: {
+                priority: 2,
+                emojis: ['🐉', '⚔️', '🗡️', '🛡️', '🏔️', '🌋', '🌊', '⚡', '🔥', '💀']
+            },
+            helper: {
+                priority: 3,
+                emojis: ['🧙‍♂️', '🦉', '🐴', '🦅', '🗝️', '📜', '💎', '🔮', '🧭', '⭐']
+            },
+            treasure: {
+                priority: 4,
+                emojis: ['👑', '💰', '💎', '🏆', '🗝️', '📜', '⚱️', '🏺', '💍', '🔱']
+            }
+        }
+    },
+    'child-friendly': {
+        type: 'simple',
+        name: 'Child Friendly',
+        icon: '👶',
+        emojis: [
+            '🌈', '⭐', '🌟', '✨', '☀️', '🌙', '☁️', '🌸', '🌺', '🌻',
+            '🌼', '🌷', '🦋', '🐝', '🐞', '🐛', '🐣', '🐥', '🦆', '🦢',
+            '🐰', '🐹', '🐭', '🐨', '🐼', '🐻', '🐮', '🐷', '🐶', '🐱',
+            '🦊', '🦁', '🐸', '🐢', '🐠', '🐡', '🐳', '🐬', '🦀', '🐌',
+            '🍎', '🍊', '🍋', '🍌', '🍇', '🍓', '🍒', '🍑', '🥝', '🍍',
+            '🎈', '🎀', '🎁', '🧸', '🪀', '🎨', '🎭', '🎪', '🎠', '🎡',
+            '⚽', '🏀', '🎾', '⚾', '🥎', '🏐', '🏈', '🪁', '🚂', '🚃',
+            '🚌', '🚎', '🚙', '🚗', '🚕', '🚐', '🏠', '🏡', '🏰', '🌳'
+        ]
+    },
+    'animal': {
+        type: 'simple',
+        name: 'Animal',
+        icon: '🦁',
+        emojis: [
+            '🐵', '🐒', '🦍', '🦧', '🐶', '🐕', '🦮', '🐕‍🦺', '🐩', '🐺',
+            '🦊', '🦝', '🐱', '🐈', '🐈‍⬛', '🦁', '🐯', '🐅', '🐆', '🐴',
+            '🐎', '🦄', '🦓', '🦌', '🦬', '🐮', '🐂', '🐃', '🐄', '🐷',
+            '🐖', '🐗', '🐽', '🐏', '🐑', '🐐', '🐪', '🐫', '🦙', '🦒',
+            '🐘', '🦣', '🦏', '🦛', '🐭', '🐁', '🐀', '🐹', '🐰', '🐇',
+            '🐿️', '🦫', '🦔', '🦇', '🐻', '🐻‍❄️', '🐨', '🐼', '🦥', '🦦',
+            '🦨', '🦘', '🦡', '🐾', '🦃', '🐔', '🐓', '🐣', '🐤', '🐥',
+            '🐦', '🐧', '🕊️', '🦅', '🦆', '🦢', '🦉', '🦤', '🪶', '🦩',
+            '🦚', '🦜', '🐸', '🐊', '🐢', '🦎', '🐍', '🐲', '🐉', '🦕',
+            '🦖', '🐳', '🐋', '🐬', '🦭', '🐟', '🐠', '🐡', '🦈', '🐙'
+        ]
+    },
+    'sci-fi': {
+        type: 'complex',
+        name: 'Sci-Fi',
+        icon: '🚀',
+        categories: {
+            character: {
+                priority: 1,
+                emojis: ['🤖', '👽', '👾', '🛸', '🧑‍🚀', '👩‍🚀', '👨‍🚀', '🧬', '🦾', '🦿']
+            },
+            technology: {
+                priority: 2,
+                emojis: ['🚀', '🛸', '🛰️', '🔭', '⚡', '🔋', '💻', '📡', '🔬', '⚛️']
+            },
+            environment: {
+                priority: 3,
+                emojis: ['🌌', '🌠', '🪐', '🌍', '🌎', '🌏', '🌙', '☄️', '💫', '⭐']
+            },
+            item: {
+                priority: 4,
+                emojis: ['💎', '🔮', '⚗️', '🧪', '🧫', '💊', '🔦', '🔌', '💡', '🔧']
+            }
+        }
+    },
+    'fantasy': {
+        type: 'complex',
+        name: 'Fantasy',
+        icon: '🧙',
+        categories: {
+            character: {
+                priority: 1,
+                emojis: ['🧙', '🧙‍♀️', '🧝', '🧝‍♀️', '🧚', '🧚‍♀️', '🧛', '🧛‍♀️', '🧜', '🧜‍♀️']
+            },
+            creature: {
+                priority: 2,
+                emojis: ['🐉', '🦄', '🦇', '🦅', '🦉', '🐺', '🦊', '🐲', '🦖', '🦕']
+            },
+            magic: {
+                priority: 3,
+                emojis: ['✨', '🔮', '⭐', '🌟', '💫', '🪄', '📜', '📖', '🗝️', '💎']
+            },
+            environment: {
+                priority: 4,
+                emojis: ['🏰', '🏛️', '⛰️', '🌋', '🏔️', '🌲', '🌳', '🌴', '🍄', '🌙']
+            }
+        }
+    }
+>>>>>>> b155a47 (Redesign with single set selection and 5 new themed story sets)
 };
 
-// Combine all sets into one collection for backwards compatibility
-const EMOJI_COLLECTION = Object.values(EMOJI_SETS).flat();
-
-// Function to get emojis from selected sets
-function getEmojiPool(selectedSets) {
-    if (selectedSets.length === 0 || selectedSets.includes('all')) {
-        return [...EMOJI_COLLECTION];
-    }
-    
-    const pool = [];
-    selectedSets.forEach(setName => {
-        if (EMOJI_SETS[setName]) {
-            pool.push(...EMOJI_SETS[setName]);
-        }
-    });
-    
-    return pool;
+// Function to get random element from array
+function getRandomElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
 }
 
-// Function to get random non-repeating emojis
-function getRandomEmojis(count, selectedSets = ['all']) {
-    const emojiPool = getEmojiPool(selectedSets);
+// Function to remove element from array
+function removeElement(array, element) {
+    const index = array.indexOf(element);
+    if (index > -1) {
+        array.splice(index, 1);
+    }
+}
+
+// Function to generate emojis from a simple set
+function generateFromSimpleSet(set, count) {
+    const availableEmojis = [...set.emojis];
+    const selected = [];
+    const validCount = Math.min(count, availableEmojis.length);
     
-    // Validate count
-    const validCount = Math.min(Math.max(1, count), emojiPool.length);
-    
-    // Create a copy of the emoji pool to avoid modifying the original
-    const availableEmojis = [...emojiPool];
-    const selectedEmojis = [];
-    
-    // Select random emojis without repetition
     for (let i = 0; i < validCount; i++) {
-        const randomIndex = Math.floor(Math.random() * availableEmojis.length);
-        selectedEmojis.push(availableEmojis[randomIndex]);
-        // Remove the selected emoji to ensure no repetition
-        availableEmojis.splice(randomIndex, 1);
+        const emoji = getRandomElement(availableEmojis);
+        selected.push(emoji);
+        removeElement(availableEmojis, emoji);
     }
     
-    return selectedEmojis;
+    return selected;
+}
+
+// Function to generate emojis from a complex set
+function generateFromComplexSet(set, count) {
+    const selected = [];
+    const categories = Object.entries(set.categories)
+        .sort((a, b) => a[1].priority - b[1].priority);
+    
+    // Create a pool of available emojis per category
+    const availableByCategory = {};
+    categories.forEach(([name, cat]) => {
+        availableByCategory[name] = [...cat.emojis];
+    });
+    
+    // First, try to get at least one from each category based on priority
+    for (const [categoryName, category] of categories) {
+        if (selected.length >= count) break;
+        
+        const available = availableByCategory[categoryName];
+        if (available.length > 0) {
+            const emoji = getRandomElement(available);
+            selected.push(emoji);
+            removeElement(availableByCategory[categoryName], emoji);
+        }
+    }
+    
+    // If we still need more emojis, draw from any remaining emojis
+    while (selected.length < count) {
+        // Collect all remaining emojis
+        const allRemaining = [];
+        categories.forEach(([name]) => {
+            allRemaining.push(...availableByCategory[name]);
+        });
+        
+        if (allRemaining.length === 0) break;
+        
+        const emoji = getRandomElement(allRemaining);
+        selected.push(emoji);
+        
+        // Remove from the appropriate category
+        for (const [name] of categories) {
+            if (availableByCategory[name].includes(emoji)) {
+                removeElement(availableByCategory[name], emoji);
+                break;
+            }
+        }
+    }
+    
+    return selected;
+}
+
+// Function to get random non-repeating emojis from selected set
+function getRandomEmojis(count, setKey) {
+    const set = STORY_SETS[setKey];
+    if (!set) return [];
+    
+    if (set.type === 'simple') {
+        return generateFromSimpleSet(set, count);
+    } else {
+        return generateFromComplexSet(set, count);
+    }
 }
 
 // Function to validate emoji count input
@@ -251,8 +375,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const emojiCountInput = document.getElementById('emojiCount');
     const emojiDisplay = document.getElementById('emojiDisplay');
     const errorMessage = document.getElementById('errorMessage');
-    const setCheckboxes = document.querySelectorAll('.set-checkbox');
-    const allSetsCheckbox = document.querySelector('.set-checkbox[value="all"]');
     const toggleSettingsBtn = document.getElementById('toggleSettings');
     const setOptions = document.getElementById('setOptions');
     const toggleIcon = toggleSettingsBtn.querySelector('.toggle-icon');
@@ -298,33 +420,10 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleIcon.classList.toggle('expanded');
     });
     
-    // Handle "All Sets" checkbox behavior
-    setCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            if (checkbox.value === 'all' && checkbox.checked) {
-                // When "All Sets" is checked, uncheck all other sets
-                setCheckboxes.forEach(cb => {
-                    if (cb.value !== 'all') {
-                        cb.checked = false;
-                    }
-                });
-            } else if (checkbox.value !== 'all' && checkbox.checked) {
-                // When any specific set is checked, uncheck "All Sets"
-                allSetsCheckbox.checked = false;
-            }
-            
-            // Ensure at least one checkbox is checked
-            const anyChecked = Array.from(setCheckboxes).some(cb => cb.checked);
-            if (!anyChecked) {
-                allSetsCheckbox.checked = true;
-            }
-        });
-    });
-    
-    // Function to get selected emoji sets
-    function getSelectedSets() {
-        const checkboxes = document.querySelectorAll('.set-checkbox:checked');
-        return Array.from(checkboxes).map(cb => cb.value);
+    // Function to get selected set
+    function getSelectedSet() {
+        const selectedRadio = document.querySelector('.set-radio:checked');
+        return selectedRadio ? selectedRadio.value : 'heros-journey';
     }
     
     // Generate emojis on button click
@@ -337,8 +436,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         const count = parseInt(inputValue, 10);
-        const selectedSets = getSelectedSets();
-        const emojis = getRandomEmojis(count, selectedSets);
+        const selectedSet = getSelectedSet();
+        const emojis = getRandomEmojis(count, selectedSet);
         displayEmojis(emojis);
     });
     
@@ -356,6 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Generate initial set of emojis on load using the default value from the input
-    const initialEmojis = getRandomEmojis(parseInt(emojiCountInput.value, 10), ['all']);
+    const initialEmojis = getRandomEmojis(parseInt(emojiCountInput.value, 10), 'heros-journey');
     displayEmojis(initialEmojis);
 });

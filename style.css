@@ -132,13 +132,15 @@ h1 {
     background: #f0f4ff;
 }
 
-.set-option input[type="checkbox"] {
+.set-option input[type="checkbox"],
+.set-option input[type="radio"] {
     cursor: pointer;
     width: 18px;
     height: 18px;
 }
 
-.set-option input[type="checkbox"]:checked + span {
+.set-option input[type="checkbox"]:checked + span,
+.set-option input[type="radio"]:checked + span {
     color: #667eea;
     font-weight: 600;
 }

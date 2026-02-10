@@ -15,35 +15,31 @@
         
         <div class="set-selector">
             <div class="set-selector-header">
-                <h3>Select Emoji Sets:</h3>
-                <button id="toggleSettings" class="toggle-btn" aria-label="Toggle emoji set settings">
+                <h3>Select Story Set:</h3>
+                <button id="toggleSettings" class="toggle-btn" aria-label="Toggle story set settings">
                     <span class="toggle-icon">▼</span>
                 </button>
             </div>
             <div class="set-options" id="setOptions">
                 <label class="set-option">
-                    <input type="checkbox" class="set-checkbox" value="all" checked>
-                    <span>All Sets</span>
+                    <input type="radio" class="set-radio" name="storySet" value="heros-journey" checked>
+                    <span>Hero's Journey 🦸</span>
                 </label>
                 <label class="set-option">
-                    <input type="checkbox" class="set-checkbox" value="environment">
-                    <span>Environment 🌍</span>
+                    <input type="radio" class="set-radio" name="storySet" value="child-friendly">
+                    <span>Child Friendly 👶</span>
                 </label>
                 <label class="set-option">
-                    <input type="checkbox" class="set-checkbox" value="character">
-                    <span>Character 🦁</span>
+                    <input type="radio" class="set-radio" name="storySet" value="animal">
+                    <span>Animal 🦁</span>
                 </label>
                 <label class="set-option">
-                    <input type="checkbox" class="set-checkbox" value="item">
-                    <span>Item 👑</span>
+                    <input type="radio" class="set-radio" name="storySet" value="sci-fi">
+                    <span>Sci-Fi 🚀</span>
                 </label>
                 <label class="set-option">
-                    <input type="checkbox" class="set-checkbox" value="event">
-                    <span>Event 🎉</span>
-                </label>
-                <label class="set-option">
-                    <input type="checkbox" class="set-checkbox" value="transport">
-                    <span>Transport 🚀</span>
+                    <input type="radio" class="set-radio" name="storySet" value="fantasy">
+                    <span>Fantasy 🧙</span>
                 </label>
                 <div class="emoji-count-control">
                     <label for="emojiCount">Number of emojis:</label>
