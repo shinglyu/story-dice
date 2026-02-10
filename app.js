@@ -55,6 +55,12 @@ function displayEmojis(emojis) {
         emojiElement.className = 'emoji-item';
         emojiElement.textContent = emoji;
         emojiElement.style.animationDelay = `${index * 0.05}s`;
+        
+        // Add click handler to toggle used state
+        emojiElement.addEventListener('click', () => {
+            emojiElement.classList.toggle('used');
+        });
+        
         emojiDisplay.appendChild(emojiElement);
     });
 }
