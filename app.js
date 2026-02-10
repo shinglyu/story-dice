@@ -112,6 +112,7 @@ const STORY_SETS = {
 
 // Function to get random element from array
 function getRandomElement(array) {
+    if (array.length === 0) return null;
     return array[Math.floor(Math.random() * array.length)];
 }
 
@@ -131,8 +132,10 @@ function generateFromSimpleSet(set, count) {
     
     for (let i = 0; i < validCount; i++) {
         const emoji = getRandomElement(availableEmojis);
-        selected.push(emoji);
-        removeElement(availableEmojis, emoji);
+        if (emoji) {
+            selected.push(emoji);
+            removeElement(availableEmojis, emoji);
+        }
     }
     
     return selected;
@@ -157,8 +160,10 @@ function generateFromComplexSet(set, count) {
         const available = availableByCategory[categoryName];
         if (available.length > 0) {
             const emoji = getRandomElement(available);
-            selected.push(emoji);
-            removeElement(availableByCategory[categoryName], emoji);
+            if (emoji) {
+                selected.push(emoji);
+                removeElement(availableByCategory[categoryName], emoji);
+            }
         }
     }
     
@@ -173,14 +178,18 @@ function generateFromComplexSet(set, count) {
         if (allRemaining.length === 0) break;
         
         const emoji = getRandomElement(allRemaining);
-        selected.push(emoji);
-        
-        // Remove from the appropriate category
-        for (const [name] of categories) {
-            if (availableByCategory[name].includes(emoji)) {
-                removeElement(availableByCategory[name], emoji);
-                break;
+        if (emoji) {
+            selected.push(emoji);
+            
+            // Remove from the appropriate category
+            for (const [name] of categories) {
+                if (availableByCategory[name].includes(emoji)) {
+                    removeElement(availableByCategory[name], emoji);
+                    break;
+                }
             }
+        } else {
+            break;
         }
     }
     
