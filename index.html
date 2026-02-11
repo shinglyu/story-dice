@@ -13,9 +13,42 @@
         <h1>🎲 Story Dice</h1>
         <p class="subtitle">Generate random emojis for creative storytelling!</p>
         
+        <div class="set-selector">
+            <div class="set-selector-header">
+                <h3>Select Story Set:</h3>
+                <button id="toggleSettings" class="toggle-btn" aria-label="Toggle story set settings">
+                    <span class="toggle-icon">▼</span>
+                </button>
+            </div>
+            <div class="set-options" id="setOptions">
+                <label class="set-option">
+                    <input type="radio" class="set-radio" name="storySet" value="heros-journey" checked>
+                    <span>Hero's Journey 🦸</span>
+                </label>
+                <label class="set-option">
+                    <input type="radio" class="set-radio" name="storySet" value="child-friendly">
+                    <span>Child Friendly 👶</span>
+                </label>
+                <label class="set-option">
+                    <input type="radio" class="set-radio" name="storySet" value="animal">
+                    <span>Animal 🦁</span>
+                </label>
+                <label class="set-option">
+                    <input type="radio" class="set-radio" name="storySet" value="sci-fi">
+                    <span>Sci-Fi 🚀</span>
+                </label>
+                <label class="set-option">
+                    <input type="radio" class="set-radio" name="storySet" value="fantasy">
+                    <span>Fantasy 🧙</span>
+                </label>
+                <div class="emoji-count-control">
+                    <label for="emojiCount">Number of emojis:</label>
+                    <input type="number" id="emojiCount" min="1" max="50" value="9">
+                </div>
+            </div>
+        </div>
+        
         <div class="controls">
-            <label for="emojiCount">Number of emojis:</label>
-            <input type="number" id="emojiCount" min="1" max="50" value="9" required>
             <button id="generateBtn">Generate Emojis</button>
         </div>
         <div id="errorMessage" class="error-message"></div>

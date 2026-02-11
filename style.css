@@ -47,13 +47,141 @@ h1 {
     margin-bottom: 30px;
 }
 
+.set-selector {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.set-selector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.set-selector h3 {
+    color: #333;
+    margin-bottom: 0;
+    font-size: 1.1em;
+}
+
+.toggle-btn {
+    background: transparent;
+    color: #667eea;
+    border: none;
+    padding: 5px 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: transform 0.3s;
+    min-width: auto;
+    box-shadow: none;
+}
+
+.toggle-btn:hover {
+    transform: none;
+    box-shadow: none;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 4px;
+}
+
+.toggle-btn:active {
+    transform: none;
+}
+
+.toggle-icon {
+    display: inline-block;
+    transition: transform 0.3s;
+    transform: rotate(-90deg);
+}
+
+.toggle-icon.expanded {
+    transform: rotate(0deg);
+}
+
+.set-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+}
+
+.set-options.expanded {
+    max-height: 500px;
+    opacity: 1;
+}
+
+.set-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.set-option:hover {
+    border-color: #667eea;
+    background: #f0f4ff;
+}
+
+.set-option input[type="checkbox"],
+.set-option input[type="radio"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.set-option input[type="checkbox"]:checked + span,
+.set-option input[type="radio"]:checked + span {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.emoji-count-control {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+.emoji-count-control label {
+    font-weight: 600;
+    color: #333;
+}
+
+.emoji-count-control input[type="number"] {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 80px;
+    transition: border-color 0.3s;
+}
+
+.emoji-count-control input[type="number"]:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
 .controls {
     display: flex;
-    gap: 15px;
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
-    flex-wrap: wrap;
 }
 
 label {
