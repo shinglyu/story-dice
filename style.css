@@ -322,4 +322,53 @@ button:active {
     .emoji-item {
         font-size: 3em;
     }
+    
+    /* Make settings section more compact on mobile */
+    .set-selector {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .set-selector h3 {
+        font-size: 1em;
+    }
+    
+    /* Arrange set options in 2-column grid on mobile */
+    .set-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    
+    .set-option {
+        padding: 6px 10px;
+        font-size: 0.9em;
+    }
+    
+    /* Make emoji count control span full width and be more compact */
+    .emoji-count-control {
+        grid-column: 1 / -1;
+        padding: 6px 10px;
+        margin-top: 0;
+    }
+    
+    .emoji-count-control label {
+        font-size: 0.9em;
+    }
+    
+    .emoji-count-control input[type="number"] {
+        width: 60px;
+        padding: 6px 8px;
+        font-size: 14px;
+    }
+    
+    /* Make controls (generate button) more compact */
+    .controls {
+        margin-bottom: 15px;
+    }
+    
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
 }
