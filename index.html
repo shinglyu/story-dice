@@ -15,9 +15,10 @@
         
         <div class="controls">
             <label for="emojiCount">Number of emojis:</label>
-            <input type="number" id="emojiCount" min="1" max="50" value="9">
+            <input type="number" id="emojiCount" min="1" max="50" value="9" required>
             <button id="generateBtn">Generate Emojis</button>
         </div>
+        <div id="errorMessage" class="error-message"></div>
         
         <div id="emojiDisplay" class="emoji-display">
             <!-- Emojis will appear here -->
