@@ -238,6 +238,16 @@ button:active {
     transform: translateY(0);
 }
 
+button.shake-triggered {
+    animation: shakeButton 0.3s ease-in-out;
+}
+
+@keyframes shakeButton {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
 .emoji-display {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
