@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('devicemotion', (event) => {
             const acceleration = event.accelerationIncludingGravity;
             
-            if (!acceleration || acceleration.x === null || acceleration.y === null || acceleration.z === null) {
+            if (!acceleration) {
                 return;
             }
             
