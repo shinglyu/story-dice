@@ -312,14 +312,79 @@ button:active {
 
 @media (max-width: 600px) {
     .container {
-        padding: 20px;
+        padding: 15px;
     }
     
     h1 {
-        font-size: 2em;
+        font-size: 1.8em;
+        margin-bottom: 5px;
+    }
+    
+    .subtitle {
+        margin-bottom: 15px;
+        font-size: 0.9em;
     }
     
     .emoji-item {
         font-size: 3em;
+    }
+    
+    /* Make settings section more compact on mobile */
+    .set-selector {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .set-selector h3 {
+        font-size: 0.95em;
+    }
+    
+    .set-selector-header {
+        margin-bottom: 10px;
+    }
+    
+    /* Arrange set options in 2-column grid on mobile */
+    .set-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    
+    .set-option {
+        padding: 5px 8px;
+        font-size: 0.85em;
+    }
+    
+    /* Make emoji count control span full width and be more compact */
+    .emoji-count-control {
+        grid-column: 1 / -1;
+        padding: 5px 8px;
+        margin-top: 0;
+    }
+    
+    .emoji-count-control label {
+        font-size: 0.85em;
+    }
+    
+    .emoji-count-control input[type="number"] {
+        width: 55px;
+        padding: 4px 6px;
+        font-size: 14px;
+    }
+    
+    /* Make controls (generate button) more compact */
+    .controls {
+        margin-bottom: 10px;
+    }
+    
+    button {
+        padding: 8px 18px;
+        font-size: 14px;
+    }
+    
+    /* Reduce emoji display padding for better centering */
+    .emoji-display {
+        padding: 15px;
+        min-height: 150px;
     }
 }
