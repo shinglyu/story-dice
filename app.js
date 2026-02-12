@@ -520,5 +520,11 @@ document.addEventListener('DOMContentLoaded', () => {
             lastY = y;
             lastZ = z;
         });
+    } else {
+        // Hide shake hint if device motion is not supported
+        const shakeHint = document.querySelector('.shake-hint');
+        if (shakeHint) {
+            shakeHint.style.display = 'none';
+        }
     }
 });
