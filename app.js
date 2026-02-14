@@ -371,6 +371,34 @@ function displayEmojis(emojis) {
     });
 }
 
+// Shake detection variables
+let lastShakeTime = 0;
+const SHAKE_THRESHOLD = 15;
+const SHAKE_COOLDOWN = 1000; // 1 second cooldown between shakes
+let lastX = 0, lastY = 0, lastZ = 0;
+
+// Function to detect shake
+function handleShake() {
+    const now = Date.now();
+    if (now - lastShakeTime < SHAKE_COOLDOWN) {
+        return; // Too soon since last shake
+    }
+    
+    lastShakeTime = now;
+    
+    // Trigger the generate button click
+    const generateBtn = document.getElementById('generateBtn');
+    if (generateBtn) {
+        generateBtn.click();
+        
+        // Add visual feedback for shake
+        generateBtn.classList.add('shake-triggered');
+        setTimeout(() => {
+            generateBtn.classList.remove('shake-triggered');
+        }, 300);
+    }
+}
+
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
     const generateBtn = document.getElementById('generateBtn');
@@ -463,4 +491,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // Generate initial set of emojis on load using the default value from the input
     const initialEmojis = getRandomEmojis(parseInt(emojiCountInput.value, 10), 'heros-journey');
     displayEmojis(initialEmojis);
+    
+    // Add shake detection for mobile devices
+    if (window.DeviceMotionEvent) {
+        window.addEventListener('devicemotion', (event) => {
+            const acceleration = event.accelerationIncludingGravity;
+            
+            if (!acceleration) {
+                return;
+            }
+            
+            const x = acceleration.x || 0;
+            const y = acceleration.y || 0;
+            const z = acceleration.z || 0;
+            
+            // Calculate the change in acceleration
+            const deltaX = Math.abs(x - lastX);
+            const deltaY = Math.abs(y - lastY);
+            const deltaZ = Math.abs(z - lastZ);
+            
+            // Check if the change exceeds the threshold
+            if (deltaX > SHAKE_THRESHOLD || deltaY > SHAKE_THRESHOLD || deltaZ > SHAKE_THRESHOLD) {
+                handleShake();
+            }
+            
+            // Update last values
+            lastX = x;
+            lastY = y;
+            lastZ = z;
+        });
+    } else {
+        // Hide shake hint if device motion is not supported
+        const shakeHint = document.querySelector('.shake-hint');
+        if (shakeHint) {
+            shakeHint.style.display = 'none';
+        }
+    }
 });

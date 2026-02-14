@@ -16,6 +16,8 @@ A web app that picks a random set of UTF-8 emojis (non-repeating) for creative s
   - ✨ All Sets (choose from all categories)
 - 📱 Responsive design for all devices
 - ✨ Beautiful animations and hover effects
+- 🤳 **Shake to roll** on mobile devices
+- 💾 **PWA support** for offline use and installation
 
 ## Usage
 
@@ -26,7 +28,16 @@ Simply open `index.html` in your web browser to start using the app.
    - "All Sets" mode draws from all available categories
 2. Choose the number of emojis you want (1-50)
 3. Click "Generate Emojis" or press Enter
-4. Use the random emojis for storytelling, brainstorming, or creative writing!
+4. **On mobile**: Shake your device to generate new emojis!
+5. Use the random emojis for storytelling, brainstorming, or creative writing!
+
+### PWA Installation
+
+Story Dice can be installed as a Progressive Web App (PWA) for offline use:
+
+1. On mobile browsers: Tap "Add to Home Screen" when prompted
+2. On desktop Chrome/Edge: Look for the install icon in the address bar
+3. Once installed, you can use Story Dice even without an internet connection!
 
 ### Examples
 
