@@ -1,4 +1,4 @@
-const CACHE_NAME = 'story-dice-v1';
+const CACHE_NAME = 'story-dice-v2';
 const urlsToCache = [
   './',
   './index.html',
@@ -15,46 +15,39 @@ self.addEventListener('install', (event) => {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
+      .then(() => self.skipWaiting())
   );
 });
 
-// Fetch from cache first, then network
+// Network first, fallback to cache
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then((response) => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        
-        // Clone the request
-        const fetchRequest = event.request.clone();
-        
-        return fetch(fetchRequest).then((response) => {
-          // Check if valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-          
-          // Clone the response
+        // Cache valid responses and return them
+        if (response && response.status === 200 && response.type === 'basic') {
           const responseToCache = response.clone();
-          
           caches.open(CACHE_NAME)
             .then((cache) => {
               cache.put(event.request, responseToCache);
             });
-          
           return response;
-        });
+        }
+
+        // For non-200 responses, fall back to cache if available
+        return caches.match(event.request).then((cached) => cached || response);
+      })
+      .catch(() => {
+        // Network failed - serve from cache
+        return caches.match(event.request);
       })
   );
 });
 
-// Activate service worker and clean up old caches
+// Activate service worker, clean up old caches, and take control immediately
 self.addEventListener('activate', (event) => {
   const cacheWhitelist = [CACHE_NAME];
-  
+
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -64,6 +57,6 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
