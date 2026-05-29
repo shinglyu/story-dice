@@ -20,9 +20,30 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
+}
+
+footer {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 20px 0 10px;
+    font-size: 0.9em;
+}
+
+footer p {
+    margin-bottom: 6px;
+}
+
+footer a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline;
+}
+
+footer a:hover {
+    color: white;
 }
 
 .container {
